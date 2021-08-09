@@ -16,7 +16,10 @@ public class LocationDAO {
 		dbConnect = new DBConnect();
 	}
 	
+	//location table에서 id와 일치하는 정보를 조회
 	public void getOne1(int location_id) {
+		
+		//ADD-DTO Branch
 		
 		PreparedStatement st =null;
 		ResultSet rs = null;
@@ -48,23 +51,18 @@ public class LocationDAO {
 	}
 	
 	
-	
+	// location 정보 출력
 	public void getList() {
-		String user = "user02";
-		String password = "user02";
 		
-		String url = "jdbc:oracle:thin:@localhost:1522:xe";
-		String driver = "oracle.jdbc.driver.OracleDriver";
 		
 		Connection co = null;
 		PreparedStatement st = null;
 		ResultSet re  = null;
 		try {
 			
-			Class.forName(driver);
-			System.out.println("Driver 연결 성공");
+
 			
-			co = DriverManager.getConnection(url, user, password);
+			co = dbConnect.getConnect();
 			System.out.println("접속 성공");
 			System.out.println(co);
 			
@@ -102,18 +100,20 @@ public class LocationDAO {
 	}
 	
 	
+	
+	
+	
+	
 	public void getOne() {
 		//1. 연결 정보
-		String user ="user02";
-		String password="user02";
-		String url = "jdbc:oracle:thin:@localhost:1522:xe";
+	
 		Connection con =null;
 		PreparedStatement st =null;
 		ResultSet rs = null;
 		
 		// connection
 		try {
-			con = DriverManager.getConnection(url,user,password);
+			con = dbConnect.getConnect();
 			System.out.println("접속 완료");
 			int id =40;
 			
