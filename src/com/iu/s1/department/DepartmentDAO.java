@@ -3,6 +3,7 @@ package com.iu.s1.department;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.iu.s1.employee.EmployeeDTO;
@@ -18,6 +19,52 @@ public class DepartmentDAO {
 		departmentDTO = new DepartmentDTO();
 		dbConnect = new DBConnect();
 	}
+	
+	
+	
+	public int setInsert(DepartmentDTO departmentDTO) {
+		Connection con=null;
+		PreparedStatement st=null;
+		int result = 0;
+		
+		try {
+			con=dbConnect.getConnect();
+			
+			String sql= "INSERT INTO DEPARTMENTS VALUES(?,?,?,?)";
+			
+			st = con.prepareStatement(sql);
+			
+			
+			st.setInt(1, departmentDTO.getDepartment_id());
+			st.setString(2, departmentDTO.getDepartment_name());
+			st.setInt(3, departmentDTO.getManager_id() );
+			st.setInt(4, departmentDTO.getLocation_id());
+			
+			result = st.executeUpdate(); // INSERT, UPDATE, DELETE 쓸때 이걸 사용
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
+	
 	
 	//(DepartmentDTO aa)
 	public Depart_EmpDTO getJoin(DepartmentDTO aa) {
