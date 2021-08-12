@@ -22,11 +22,16 @@ public class LocationController {
 	public void start() {
 		
 		boolean check = true;
-		
+	
 		while(check) {
+			
 			System.out.println("1. 전체정보출력");
 			System.out.println("2. 한개정보출력");
-			System.out.println("3. 나가기");
+			System.out.println("3. 지역정보추가");
+			//삭제시 오류 발생
+			//직접 추가한 지역을 삭제하세요
+			System.out.println("4. 지역정보삭제");
+			System.out.println("5. 나가기");
 			
 			int select =sc.nextInt();
 			
@@ -47,6 +52,31 @@ public class LocationController {
 				}else {
 					System.out.println("비어있음 다시 입력해줘요");
 				}
+				
+			}else if(select==3) {
+				LocationDTO locationDTO = locationInput.insert(sc);
+				int result = locationDAO.insert(locationDTO);
+				
+				
+				
+				if(result!=0) {
+					System.out.println("입력완료");
+				}else {
+					System.out.println("입력실패");
+				}
+				
+				
+			}else if(select==4) {
+				LocationDTO locationDTO = locationInput.inputId(sc);
+				
+				int result = locationDAO.delete(locationDTO);
+				
+				if(result!=0) {
+					System.out.println("삭제완료");
+				}else {
+					System.out.println("삭제실패");
+				}
+				
 				
 			}else {
 				System.out.println("종료합니다.");

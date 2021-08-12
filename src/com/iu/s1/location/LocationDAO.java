@@ -13,6 +13,70 @@ public class LocationDAO {
 	
 	private DBConnect dbConnect;
 	
+	
+	
+	public int insert(LocationDTO locationDTO) {
+		Connection con=null;
+		PreparedStatement st =null;
+		int result=0;
+		
+		try {
+			con= dbConnect.getConnect();
+			
+			String sql="INSERT INTO LOCATIONS VALUES(?,?,?,?,?,?)";
+			
+			st= con.prepareStatement(sql);
+			
+			st.setInt(1, locationDTO.getLocation_id());
+			st.setString(2, locationDTO.getStreet_address());
+			st.setString(3, locationDTO.getPostal_code());
+			st.setString(4, locationDTO.getCity());
+			st.setString(5, locationDTO.getState_province());
+			st.setString(6, locationDTO.getCountry_id());
+			
+			result = st.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dbConnect.disConnect(st, con);
+		}
+		return result;
+	}
+	
+	
+	public int delete(LocationDTO locationDTO) {
+		Connection con=null;
+		PreparedStatement st = null;
+		int result=0;
+		try {
+			con = dbConnect.getConnect();
+			
+			String sql="DELETE LOCATIONS WHERE LOCATION_ID=?";
+			
+			st = con.prepareStatement(sql);
+			
+			st.setInt(1, locationDTO.getLocation_id());
+			
+			result = st.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dbConnect.disConnect(st, con);
+			
+		}
+		
+		return result;
+		
+		
+	}
+	
+	
 	public LocationDAO() {
 		dbConnect = new DBConnect();
 	}
@@ -81,12 +145,12 @@ public class LocationDAO {
 			
 			if(rs.next()) {
 				result = new LocationDTO(); //객체 생성
-				result .setLocation_id(rs.getInt(1));
-				result.setStreet_address("STREET_ADDRESS");
-				result.setPostal_code("POSTAL_CODE");
-				result.setCity("CITY");
-				result.setState_province("STATE_PROVINCE");
-				result.setCountry_id("COUNTRY_ID");
+				result.setLocation_id(rs.getInt(1));
+				result.setStreet_address(rs.getString(2));
+				result.setPostal_code(rs.getString(3));
+				result.setCity(rs.getString(4));
+				result.setState_province(rs.getString(5));
+				result.setCountry_id(rs.getString(6));
 				
 				
 			}else {

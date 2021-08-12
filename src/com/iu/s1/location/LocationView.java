@@ -24,8 +24,9 @@ public class LocationView {
 		
 		
 		
-		
 	}
+	
+	
 	
 	
 }
